@@ -1,34 +1,40 @@
 package dev.janwillem.collectionapi.dataAccess.models;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
 public class ProductGroup {
     @Id
-    private UUID Id;
-    private String Name;
-    private UUID ParentID;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    private UUID id;
+    private String name;
+    private UUID parentID;
 
     public UUID getId() {
-        return Id;
+        return id;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public UUID getParentID() {
-        return ParentID;
+        return parentID;
     }
 
     public void setParentID(UUID parentID) {
-        ParentID = parentID;
+        this.parentID = parentID;
     }
 
     public ProductGroup() {
@@ -36,11 +42,11 @@ public class ProductGroup {
     }
 
     public ProductGroup(String name, UUID parentID) {
-        Name = name;
-        ParentID = parentID;
+        this.name = name;
+        this.parentID = parentID;
     }
 
     public ProductGroup(String name) {
-        Name = name;
+        this.name = name;
     }
 }

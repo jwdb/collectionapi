@@ -1,36 +1,42 @@
 package dev.janwillem.collectionapi.dataAccess.models;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
 public class Address {
     @Id
-    private UUID Id;
-    private UUID UserId;
-    private String Street;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    private UUID id;
+    private UUID userId;
+    private String street;
     private String ZIP;
-    private String City;
+    private String city;
 
     public UUID getId() {
-        return Id;
+        return id;
     }
 
     public UUID getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(UUID userId) {
-        UserId = userId;
+        this.userId = userId;
     }
 
     public String getStreet() {
-        return Street;
+        return street;
     }
 
     public void setStreet(String street) {
-        Street = street;
+        this.street = street;
     }
 
     public String getZIP() {
@@ -42,11 +48,11 @@ public class Address {
     }
 
     public String getCity() {
-        return City;
+        return city;
     }
 
     public void setCity(String city) {
-        City = city;
+        this.city = city;
     }
 
     public Address() {
@@ -54,9 +60,9 @@ public class Address {
     }
 
     public Address(UUID userId, String street, String ZIP, String city) {
-        UserId = userId;
-        Street = street;
+        this.userId = userId;
+        this.street = street;
         this.ZIP = ZIP;
-        City = city;
+        this.city = city;
     }
 }

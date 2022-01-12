@@ -1,6 +1,10 @@
 package dev.janwillem.collectionapi.dataAccess.models;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.Instant;
 import java.util.UUID;
@@ -9,38 +13,41 @@ import java.util.UUID;
 public class Order {
 
     @Id
-    private UUID Id;
-    private UUID UserID;
-    private int Status;
-    private Instant CreateDate;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    private UUID id;
+    private UUID userID;
+    private int status;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Instant createDate;
 
     public UUID getId() {
-        return Id;
+        return id;
     }
 
     public UUID getUserID() {
-        return UserID;
+        return userID;
     }
 
     public void setUserID(UUID userID) {
-        UserID = userID;
+        this.userID = userID;
     }
 
     public int getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(int status) {
-        Status = status;
+        this.status = status;
     }
 
     public Instant getCreateDate() {
-        return CreateDate;
+        return createDate;
     }
 
     public Order(UUID userID, int status) {
-        UserID = userID;
-        Status = status;
+        this.userID = userID;
+        this.status = status;
     }
 
     public Order() {

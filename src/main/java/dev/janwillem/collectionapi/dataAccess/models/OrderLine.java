@@ -1,59 +1,65 @@
 package dev.janwillem.collectionapi.dataAccess.models;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
 public class OrderLine {
     @Id
-    private UUID Id;
-    private UUID OrderID;
-    private UUID ProductID;
-    private int Qty;
-    private double ProductPrice;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    private UUID id;
+    private UUID orderID;
+    private UUID productID;
+    private int qty;
+    private double productPrice;
 
     public UUID getId() {
-        return Id;
+        return id;
     }
 
     public UUID getOrderID() {
-        return OrderID;
+        return orderID;
     }
 
     public void setOrderID(UUID orderID) {
-        OrderID = orderID;
+        this.orderID = orderID;
     }
 
     public UUID getProductID() {
-        return ProductID;
+        return productID;
     }
 
     public void setProductID(UUID productID) {
-        ProductID = productID;
+        this.productID = productID;
     }
 
     public int getQty() {
-        return Qty;
+        return qty;
     }
 
     public void setQty(int qty) {
-        Qty = qty;
+        this.qty = qty;
     }
 
     public double getProductPrice() {
-        return ProductPrice;
+        return productPrice;
     }
 
     public void setProductPrice(double productPrice) {
-        ProductPrice = productPrice;
+        this.productPrice = productPrice;
     }
 
     public OrderLine(UUID orderID, UUID productID, int qty, double productPrice) {
-        OrderID = orderID;
-        ProductID = productID;
-        Qty = qty;
-        ProductPrice = productPrice;
+        this.orderID = orderID;
+        this.productID = productID;
+        this.qty = qty;
+        this.productPrice = productPrice;
     }
 
     public OrderLine()
