@@ -12,6 +12,7 @@ public class Product {
     private double Price;
     private int Supply;
     private UUID GroupID;
+    private byte[] Image;
 
     public UUID getId() {
         return Id;
@@ -49,14 +50,23 @@ public class Product {
         GroupID = groupID;
     }
 
+    public byte[] getImage() {
+        return Image;
+    }
+
+    public void setImage(byte[] image) {
+        Image = image;
+    }
+
     public Product() {
 
     }
 
-    public Product(String name, double price, int supply, UUID groupID) {
+    public Product(String name, double price, int supply, UUID groupID, byte[] image) {
         Name = name;
         Price = price;
         Supply = supply;
         GroupID = groupID;
+        Image = image;
     }
 }
