@@ -2,11 +2,13 @@ package dev.janwillem.collectionapi.dataAccess.dao;
 
 import dev.janwillem.collectionapi.dataAccess.models.ProductGroup;
 import dev.janwillem.collectionapi.dataAccess.repository.ProductGroupRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Component
 public class ProductGroupDAO {
     private final ProductGroupRepository productGroupRepository;
 

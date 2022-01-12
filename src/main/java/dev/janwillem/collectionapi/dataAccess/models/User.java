@@ -10,6 +10,8 @@ public class User {
     private UUID id;
     private String Name;
     private String Password;
+    private String Username;
+    private boolean Admin;
     private Instant CreateDate;
 
     public UUID getId() {
@@ -32,13 +34,31 @@ public class User {
         Password = password;
     }
 
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String username) {
+        Username = username;
+    }
+
+    public boolean isAdmin() {
+        return Admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        Admin = admin;
+    }
+
     public Instant getCreateDate() {
         return CreateDate;
     }
 
-    public User(String name, String password) {
+    public User(String name, String username, String password, boolean isAdmin) {
         Name = name;
         Password = password;
+        Username = username;
+        Admin = isAdmin;
     }
 
     public User(String name) {
