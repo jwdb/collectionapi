@@ -2,24 +2,27 @@ package dev.janwillem.collectionapi.dataAccess.models;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Instant;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@Table(name="`Order`")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "org.hibernate.type.UUIDCharType")
+    @Column(name = "ID", insertable = false, updatable = false)
+    @Type(type = "uuid-char")
     private UUID id;
+    @Type(type = "uuid-char")
     private UUID userID;
-    private int status;
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Instant createDate;
+    private int orderStatus;
+    @Basic(optional = false)
+    @Column(name = "CreateDate", insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
 
     public UUID getId() {
         return id;
@@ -33,21 +36,21 @@ public class Order {
         this.userID = userID;
     }
 
-    public int getStatus() {
-        return status;
+    public int getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setOrderStatus(int orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public Instant getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
     public Order(UUID userID, int status) {
         this.userID = userID;
-        this.status = status;
+        this.orderStatus = status;
     }
 
     public Order() {

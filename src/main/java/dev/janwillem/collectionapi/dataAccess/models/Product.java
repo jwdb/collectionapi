@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "org.hibernate.type.UUIDCharType")
+    @Type(type = "uuid-char")
     private UUID id;
     private String name;
     private double price;

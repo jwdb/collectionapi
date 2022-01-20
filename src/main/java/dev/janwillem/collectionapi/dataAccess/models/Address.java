@@ -2,18 +2,17 @@ package dev.janwillem.collectionapi.dataAccess.models;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "org.hibernate.type.UUIDCharType")
+    @Column(name = "ID", insertable = false, updatable = false)
+    @Type(type = "uuid-char")
     private UUID id;
+    @Type(type = "uuid-char")
     private UUID userId;
     private String street;
     private String ZIP;

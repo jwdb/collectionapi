@@ -2,24 +2,24 @@ package dev.janwillem.collectionapi.dataAccess.models;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Instant;
+import java.util.Date;
 import java.util.UUID;
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "org.hibernate.type.UUIDCharType")
+    @Type(type = "uuid-char")
     private UUID id;
     private String name;
     private String password;
     private String username;
     private boolean admin;
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Instant createDate;
+    @Basic(optional = false)
+    @Column(name = "CreateDate", insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
 
     public UUID getId() {
         return id;
@@ -57,7 +57,7 @@ public class User {
         this.admin = admin;
     }
 
-    public Instant getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 

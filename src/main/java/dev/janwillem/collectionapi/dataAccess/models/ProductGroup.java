@@ -12,9 +12,10 @@ import java.util.UUID;
 public class ProductGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "org.hibernate.type.UUIDCharType")
+    @Type(type = "uuid-char")
     private UUID id;
     private String name;
+    @Type(type = "uuid-char")
     private UUID parentID;
 
     public UUID getId() {

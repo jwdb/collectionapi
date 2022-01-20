@@ -12,9 +12,11 @@ import java.util.UUID;
 public class OrderLine {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "org.hibernate.type.UUIDCharType")
+    @Type(type = "uuid-char")
     private UUID id;
+    @Type(type = "uuid-char")
     private UUID orderID;
+    @Type(type = "uuid-char")
     private UUID productID;
     private int qty;
     private double productPrice;
