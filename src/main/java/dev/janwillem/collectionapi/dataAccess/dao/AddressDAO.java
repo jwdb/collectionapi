@@ -18,6 +18,9 @@ public class AddressDAO {
     public Optional<Address> findById(UUID id) {
         return this.addressRepository.findById(id);
     }
+    public Optional<Address> findByUserId(UUID id) {
+        return this.addressRepository.findByUserId(id);
+    }
 
     public Address saveToDatabase(Address address) {
         return this.addressRepository.save(address);

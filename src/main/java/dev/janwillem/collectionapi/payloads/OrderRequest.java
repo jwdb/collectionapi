@@ -1,14 +1,16 @@
 package dev.janwillem.collectionapi.payloads;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
-public class NewOrderRequest {
+public class OrderRequest {
+    private UUID id;
     private String name;
     private String street;
     private String ZIP;
     private String city;
 
-    private ArrayList<NewOrderProductRequest> products;
+    private ArrayList<OrderProductRequest> products;
 
     public String getName() {
         return name;
@@ -42,11 +44,19 @@ public class NewOrderRequest {
         this.city = city;
     }
 
-    public ArrayList<NewOrderProductRequest> getProducts() {
+    public ArrayList<OrderProductRequest> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<NewOrderProductRequest> products) {
+    public void setProducts(ArrayList<OrderProductRequest> products) {
         this.products = products;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

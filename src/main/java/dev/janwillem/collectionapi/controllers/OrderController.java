@@ -2,11 +2,10 @@ package dev.janwillem.collectionapi.controllers;
 
 import dev.janwillem.collectionapi.dataAccess.dao.*;
 import dev.janwillem.collectionapi.dataAccess.models.*;
-import dev.janwillem.collectionapi.payloads.NewOrderProductRequest;
-import dev.janwillem.collectionapi.payloads.NewOrderRequest;
+import dev.janwillem.collectionapi.payloads.OrderProductRequest;
+import dev.janwillem.collectionapi.payloads.OrderRequest;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -36,8 +36,50 @@ public class OrderController {
 
     @GetMapping("")
     @PreAuthorize("hasAnyAuthority('Admin')")
-    public List<Order> getHandler() {
-        return new ArrayList<>(orderRepository.getAll());
+    public List<OrderRequest> getHandler() {
+        ArrayList<OrderRequest> returnList = new ArrayList<>();
+        for (Order order : orderRepository.getAll()) {
+            OrderRequest returnRequest = new OrderRequest();
+            Optional<User> userOptional = userRepository.findById(order.getUserID());
+
+            if (userOptional.isEmpty()) {
+                continue;
+            }
+
+            User user = userOptional.get();
+
+            Optional<Address> addressOptional = addressRepository.findByUserId(user.getId());
+
+            if (addressOptional.isEmpty()) {
+                continue;
+            }
+
+            Address address = addressOptional.get();
+
+            List<OrderLine> orderLines = orderLineRepository.findByOrderId(order.getId());
+
+            returnRequest.setId(order.getId());
+
+            returnRequest.setName(user.getName());
+            returnRequest.setCity(address.getCity());
+            returnRequest.setStreet(address.getStreet());
+            returnRequest.setZIP(address.getZIP());
+
+            List<OrderProductRequest> orderProducts = orderLines
+                    .stream()
+                    .map(c -> new OrderProductRequest() {{
+                        Optional<Product> product = productRepository.findById(c.getProductID());
+                        setProductID(c.getProductID());
+                        setProductName(product.isPresent() ? product.get().getName() : "");
+                        setQty(c.getQty());
+                        }})
+                    .collect(Collectors.toList());
+
+            returnRequest.setProducts(new ArrayList<>(orderProducts));
+            returnList.add(returnRequest);
+        }
+
+        return returnList;
     }
 
     @GetMapping("{id}")
@@ -55,7 +97,7 @@ public class OrderController {
 
     @PostMapping("")
     @PreAuthorize("permitAll()")
-    public ResponseEntity<UUID> postHandler(@RequestBody NewOrderRequest postRequest) {
+    public ResponseEntity<UUID> postHandler(@RequestBody OrderRequest postRequest) {
         User user = new User();
         user.setName(postRequest.getName());
         user = userRepository.saveToDatabase(user);
@@ -72,7 +114,7 @@ public class OrderController {
         order.setOrderStatus(0);
         order = orderRepository.saveToDatabase(order);
 
-        for (NewOrderProductRequest item: postRequest.getProducts()) {
+        for (OrderProductRequest item: postRequest.getProducts()) {
             Optional<Product> product = productRepository.findById(item.getProductID());
             if (product.isEmpty())
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

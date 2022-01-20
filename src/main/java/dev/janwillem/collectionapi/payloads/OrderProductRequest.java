@@ -2,8 +2,9 @@ package dev.janwillem.collectionapi.payloads;
 
 import java.util.UUID;
 
-public class NewOrderProductRequest {
+public class OrderProductRequest {
     private UUID productID;
+    private String productName;
     private int qty;
 
     public UUID getProductID() {
@@ -20,5 +21,13 @@ public class NewOrderProductRequest {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }
