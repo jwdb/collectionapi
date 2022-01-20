@@ -2,6 +2,7 @@ package dev.janwillem.collectionapi.security.jwt;
 import dev.janwillem.collectionapi.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import java.util.Date;
@@ -13,6 +14,7 @@ import io.jsonwebtoken.*;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
+    @Value("${dev.janwillem.jwtSecret}")
     private String jwtSecret = "WOLOLO";
 
     private int jwtExpirationMs = 86400000;
